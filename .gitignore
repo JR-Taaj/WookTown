@@ -1,0 +1,9 @@
+node_modules/
+build/
+dist-electron-new/
+dist-installers/
+dist-installers-old/
+minecraft/
+.cache/
+*.log
+.env

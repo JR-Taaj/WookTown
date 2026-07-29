@@ -1,0 +1,99 @@
+{
+  "name": "minecraft-fabric-launcher",
+  "version": "1.0.0",
+  "description": "Launcher Minecraft Fabric 1.20.1 - Mods depuis serveur",
+  "main": "main/index.js",
+  "author": "Sixth",
+  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "electron-dev": "concurrently \"cross-env BROWSER=none react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-build": "react-scripts build && electron-builder",
+    "electron-build:prod": "set LAUNCHER_SERVER_HOST=90.35.92.246&& npm run electron-build",
+    "electron-build:local": "set LAUNCHER_SERVER_HOST=127.0.0.1&& npm run electron-build",
+    "server": "node server/server.js",
+    "server:prod": "set PRODUCTION=true&&set EXTERNAL_URL=http://90.35.92.246:8080&& node server/server.js",
+    "release": "set GH_TOKEN=ghp_exemple&& npx electron-builder build --win --x64 --publish always",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "homepage": "./",
+  "browserslist": {
+    "production": [
+      "last 1 electron version"
+    ],
+    "development": [
+      "last 1 electron version"
+    ]
+  },
+  "build": {
+    "appId": "com.wooktown.launcher",
+    "productName": "WookTown Launcher",
+    "copyright": "Copyright © 2026 WookTown",
+    "extends": null,
+    "directories": {
+      "output": "dist-electron-new",
+      "buildResources": "assets"
+    },
+    "files": [
+      "build/**/*",
+      "main/**/*",
+      "server/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "WookTown-Launcher-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "WookTown Launcher",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
+      "license": null
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "JR-Taaj",
+        "repo": "WookTown",
+        "releaseType": "release"
+      }
+    ]
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "axios": "^1.7.9",
+    "electron-updater": "^6.8.9",
+    "extract-zip": "^2.0.1",
+    "node-fetch": "^2.7.0",
+    "prismarine-auth": "^3.1.1",
+    "progress-stream": "^2.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "wait-on": "^8.0.3"
+  }
+}

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Background -->
+  <rect x="4" y="4" width="112" height="112" rx="20" fill="#1a1a2e" stroke="#4ade80" stroke-width="6"/>
+  <!-- Shadow effect -->
+  <rect x="8" y="8" width="112" height="112" rx="20" fill="none" stroke="#22c55e" stroke-width="3" opacity="0.3"/>
+  
+  <!-- Grass block top -->
+  <rect x="25" y="15" width="70" height="18" rx="3" fill="#4ade80" stroke="#1a1a2e" stroke-width="3"/>
+  <rect x="25" y="15" width="70" height="8" rx="3" fill="#6ee7a0" stroke="#1a1a2e" stroke-width="3"/>
+  
+  <!-- Dirt block middle -->
+  <rect x="25" y="33" width="70" height="18" rx="3" fill="#92400e" stroke="#1a1a2e" stroke-width="3"/>
+  <line x1="42" y1="33" x2="42" y2="51" stroke="#1a1a2e" stroke-width="2"/>
+  <line x1="59" y1="33" x2="59" y2="51" stroke="#1a1a2e" stroke-width="2"/>
+  <line x1="76" y1="33" x2="76" y2="51" stroke="#1a1a2e" stroke-width="2"/>
+  
+  <!-- Stone block bottom -->
+  <rect x="25" y="51" width="70" height="18" rx="3" fill="#6b7280" stroke="#1a1a2e" stroke-width="3"/>
+  <line x1="42" y1="51" x2="42" y2="69" stroke="#1a1a2e" stroke-width="2"/>
+  <line x1="59" y1="51" x2="59" y2="69" stroke="#1a1a2e" stroke-width="2"/>
+  <line x1="76" y1="51" x2="76" y2="69" stroke="#1a1a2e" stroke-width="2"/>
+  
+  <!-- Pickaxe -->
+  <g transform="translate(35, 74)">
+    <rect x="0" y="0" width="8" height="30" rx="2" fill="#d97706" stroke="#1a1a2e" stroke-width="2"/>
+    <rect x="-4" y="-4" width="16" height="10" rx="2" fill="#d97706" stroke="#1a1a2e" stroke-width="2"/>
+    <polygon points="-4,-4 -10,-12 0,-12 4,-4" fill="#9ca3af" stroke="#1a1a2e" stroke-width="2"/>
+    <polygon points="12,-4 18,-12 8,-12 4,-4" fill="#9ca3af" stroke="#1a1a2e" stroke-width="2"/>
+  </g>
+  
+  <!-- Sword -->
+  <g transform="translate(68, 72)">
+    <rect x="3" y="0" width="6" height="28" rx="2" fill="#d97706" stroke="#1a1a2e" stroke-width="2"/>
+    <polygon points="0,-6 12,-6 6,-22" fill="#e5e7eb" stroke="#1a1a2e" stroke-width="2"/>
+  </g>
+</svg>

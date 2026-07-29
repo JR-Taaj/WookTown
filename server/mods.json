@@ -1,0 +1,46 @@
+[
+  {
+    "id": "HookEssential-1_0_0",
+    "name": "HookEssential-1.0.0",
+    "version": "1.0.0",
+    "filename": "HookEssential-1.0.0.jar",
+    "mc_version": "1.20.1",
+    "description": "Mod: HookEssential-1.0.0.jar",
+    "url": "http://90.35.92.246:8080/mods/files/HookEssential-1.0.0.jar",
+    "required": false,
+    "sha256": "e9a898122a48a538bfc79fcc076afb10deaae1d8fbb467662447e129e056115d"
+  },
+  {
+    "id": "cloth-config-11_1_136-fabric",
+    "name": "cloth-config-11.1.136-fabric",
+    "version": "1.0.0",
+    "filename": "cloth-config-11.1.136-fabric.jar",
+    "mc_version": "1.20.1",
+    "description": "Mod: cloth-config-11.1.136-fabric.jar",
+    "url": "http://localhost:8080/mods/files/cloth-config-11.1.136-fabric.jar",
+    "required": false,
+    "sha256": "844f49c339c8f3144e167ab21b7d0059f0d571054e26285a0749348da25c49fa"
+  },
+  {
+    "id": "fabric-api-0_92_11_1_20_1",
+    "name": "fabric-api-0.92.11+1.20.1",
+    "version": "1.0.0",
+    "filename": "fabric-api-0.92.11+1.20.1.jar",
+    "mc_version": "1.20.1",
+    "description": "Mod: fabric-api-0.92.11+1.20.1.jar",
+    "url": "http://localhost:8080/mods/files/fabric-api-0.92.11+1.20.1.jar",
+    "required": false,
+    "sha256": "3278787c04ad636525b5c3400dff8302420f79279f6d51ce3edc0149060d12eb"
+  },
+  {
+    "id": "offline-tab-head-1_0_1_1_19-1_20_4",
+    "name": "offline-tab-head-1.0.1+1.19-1.20.4",
+    "version": "1.0.0",
+    "filename": "offline-tab-head-1.0.1+1.19-1.20.4.jar",
+    "mc_version": "1.20.1",
+    "description": "Mod: offline-tab-head-1.0.1+1.19-1.20.4.jar",
+    "url": "http://localhost:8080/mods/files/offline-tab-head-1.0.1+1.19-1.20.4.jar",
+    "required": false,
+    "sha256": "143e6bb2f28ae3cd1becb3c27d79492f9497922a2d1344693439eb88108841db"
+  }
+]
