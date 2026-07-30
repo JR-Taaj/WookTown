@@ -1,6 +1,6 @@
 {
   "name": "minecraft-fabric-launcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Launcher Minecraft Fabric 1.20.1 - Mods depuis serveur",
   "main": "main/index.js",
   "author": "Sixth",
