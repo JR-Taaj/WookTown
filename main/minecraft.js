@@ -565,13 +565,23 @@ class MinecraftLauncher {
     fs.mkdirSync(Config.MODS_DIR, { recursive: true });
 
     let modsList;
+    // Essayer d'abord le serveur LOCAL (127.0.0.1:8080)
+    // Si ça échoue, essayer le serveur DISTANT (90.35.92.246:8080)
     try {
-      const resp = await this.axiosInstance.get(Config.MODS_LIST_URL, { timeout: 5000 });
-      modsList = resp.data;
-    } catch (err) {
-      this._sendProgress('Serveur de mods non disponible.', 0);
-      console.error('[!] Erreur serveur mods:', err.message);
-      return [];
+      const localResp = await this.axiosInstance.get(Config.LOCAL_MODS_LIST_URL, { timeout: 3000 });
+      modsList = localResp.data;
+      console.log('[Mods] Utilisation du serveur LOCAL (127.0.0.1:8080)');
+    } catch (localErr) {
+      console.log('[Mods] Serveur local indisponible, tentative distante...');
+      try {
+        const remoteResp = await this.axiosInstance.get(Config.MODS_LIST_URL, { timeout: 5000 });
+        modsList = remoteResp.data;
+        console.log('[Mods] Utilisation du serveur DISTANT (90.35.92.246:8080)');
+      } catch (remoteErr) {
+        this._sendProgress('Serveur de mods non disponible.', 0);
+        console.error('[!] Erreur serveur mods (local et distant):', remoteErr.message);
+        return [];
+      }
     }
 
     if (!modsList || !Array.isArray(modsList) || modsList.length === 0) {

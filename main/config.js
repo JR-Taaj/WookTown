@@ -3,31 +3,39 @@ const path = require('path');
 let app = null;
 try { app = require('electron').app; } catch {}
 
-// ─── Variables d'environnement pour la production ─────────────
-// Surchargeable via process.env pour le build :
-//   set LAUNCHER_SERVER_HOST=mods.monserveur.com && npm run electron-build
-// Ou dans package.json "build.win.extraResources" + read depuis un fichier
 const ENV = typeof process !== 'undefined' ? process.env : {};
 
-// Configuration centralisée
 const Config = {
   // ─── Auth Microsoft ─────────────────────────────────────────────
-  // prismarine-auth gère l'auth avec un client_id pré-approuvé
-  // Plus besoin de config Azure AD ici
   MICROSOFT_CLIENT_ID: '',
   MICROSOFT_TENANT: 'consumers',
   MICROSOFT_SCOPE: 'XboxLive.signin offline_access',
   MICROSOFT_REDIRECT_URI: '',
 
   // ─── Serveur de mods ─────────────────────────────────────────────
-  // En dev : http://127.0.0.1:8080
-  // En prod : définir LAUNCHER_SERVER_HOST (ex: mods.monserveur.com)
-  //           et optionnellement LAUNCHER_SERVER_PORT, LAUNCHER_SERVER_PROTOCOL
+  // IP publique (pour les joueurs distants)
+  PUBLIC_HOST: '90.35.92.246',
+  PUBLIC_PORT: 8080,
+  PUBLIC_PROTOCOL: 'http',
+
+  // IP locale (pour toi-même quand tu développes)
+  LOCAL_HOST: '127.0.0.1',
+  LOCAL_PORT: 8080,
+  LOCAL_PROTOCOL: 'http',
+
+  // Surchargeable via variables d'env
   SERVER_HOST: ENV.LAUNCHER_SERVER_HOST || '90.35.92.246',
   SERVER_PORT: parseInt(ENV.LAUNCHER_SERVER_PORT, 10) || 8080,
   SERVER_PROTOCOL: ENV.LAUNCHER_SERVER_PROTOCOL || 'http',
+
   get SERVER_URL() {
     return `${this.SERVER_PROTOCOL}://${this.SERVER_HOST}:${this.SERVER_PORT}`;
+  },
+  get LOCAL_URL() {
+    return `${this.LOCAL_PROTOCOL}://${this.LOCAL_HOST}:${this.LOCAL_PORT}`;
+  },
+  get PUBLIC_URL() {
+    return `${this.PUBLIC_PROTOCOL}://${this.PUBLIC_HOST}:${this.PUBLIC_PORT}`;
   },
   get MODS_LIST_URL() {
     return `${this.SERVER_URL}/mods/list`;
@@ -37,6 +45,15 @@ const Config = {
   },
   get MODS_CHECKSUMS_URL() {
     return `${this.SERVER_URL}/mods/checksums`;
+  },
+  get LOCAL_MODS_LIST_URL() {
+    return `${this.LOCAL_URL}/mods/list`;
+  },
+  get LOCAL_MODS_DOWNLOAD_URL() {
+    return `${this.LOCAL_URL}/mods/files`;
+  },
+  get LOCAL_MODS_CHECKSUMS_URL() {
+    return `${this.LOCAL_URL}/mods/checksums`;
   },
 
   // ─── Dossiers (lazy - app doit être initialisé) ────────────────
@@ -58,7 +75,6 @@ const Config = {
 
   // ─── Versions ────────────────────────────────────────────────────
   MINECRAFT_VERSION: '1.20.1',
-  // Fabric 0.19.3 — compatible avec Fabric API 0.92.11+ pour 1.20.1
   FABRIC_LOADER_VERSION: '0.19.3',
 
   // ─── URLs Fabric ─────────────────────────────────────────────────
@@ -74,8 +90,6 @@ const Config = {
 
   // ─── Java ────────────────────────────────────────────────────────
   JAVA_MINIMUM_VERSION: 21,
-
-  // ─── Téléchargement automatique Java (Temurin 21 JRE) ────────────
   BUNDLED_JRE_VERSION: '21.0.11+10',
   get BUNDLED_JRE_DIR() { return path.join(this.RUNTIME_DIR, `jdk-${this.BUNDLED_JRE_VERSION}-jre`); },
   get BUNDLED_JAVA_PATH() { return path.join(this.BUNDLED_JRE_DIR, 'bin', 'javaw.exe'); },
@@ -98,7 +112,6 @@ const Config = {
   MIN_HEIGHT: 480,
 
   // ─── JVM par défaut ──────────────────────────────────────────────
-  // Fabric 0.19.3 compatible avec Java 21
   DEFAULT_JVM_ARGS: [
     '-XX:+UnlockExperimentalVMOptions',
     '-XX:+UseG1GC',

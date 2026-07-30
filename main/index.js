@@ -352,13 +352,9 @@ function setupLauncher() {
 }
 
 function startModsServer() {
-  const isRemote = Config.SERVER_HOST !== '127.0.0.1' && Config.SERVER_HOST !== 'localhost';
-  if (isRemote) {
-    console.log(`[ModsServer] Serveur distant configuré : ${Config.SERVER_URL}`);
-    console.log('[ModsServer] Aucun serveur local démarré.');
-    return;
-  }
-
+  // Toujours démarrer le serveur LOCAL (127.0.0.1:8080) dans tous les cas
+  // Pour le dev : le launcher peut joindre le serveur local
+  // Pour les joueurs : le launcher essaie d'abord le local, puis le distant
   const serverPath = path.join(__dirname, '..', 'server', 'server.js');
   if (fs.existsSync(serverPath)) {
     const { spawn } = require('child_process');
@@ -369,7 +365,7 @@ function startModsServer() {
       env: {
         ...process.env,
         HOST: '127.0.0.1',
-        PORT: String(Config.SERVER_PORT),
+        PORT: '8080',
       },
     });
     serverProcess.stdout.on('data', (d) => console.log(`[ModsServer] ${d}`));
@@ -379,9 +375,9 @@ function startModsServer() {
     });
     serverProcess.on('error', (err) => console.error('[ModsServer] Erreur:', err.message));
     app.on('before-quit', () => { try { serverProcess.kill(); } catch {} });
-    console.log(`[ModsServer] Démarré sur ${Config.SERVER_URL}`);
+    console.log(`[ModsServer] Démarré sur http://127.0.0.1:8080`);
   } else {
-    console.warn('[ModsServer] server.js introuvable');
+    console.warn('[ModsServer] server.js introuvable — les mods devront venir du serveur distant');
   }
 }
 
