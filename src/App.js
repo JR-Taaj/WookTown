@@ -497,30 +497,32 @@ function App() {
     })();
   }, []);
 
-  // ─── Server check ──────────────────────────────────────────
+  // ─── Server check (local d'abord, puis distant en fallback) ──
   useEffect(() => {
-    let serverUrl = 'http://127.0.0.1:8080'; // fallback
     const check = async () => {
       setServerChecking(true);
+      // Essayer le serveur LOCAL d'abord (127.0.0.1:8080)
       try {
-        const resp = await fetch(`${serverUrl}/health`, { signal: AbortSignal.timeout(5000) });
-        setServerOnline(resp.ok);
-      } catch { setServerOnline(false); }
+        const localResp = await fetch('http://127.0.0.1:8080/health', { signal: AbortSignal.timeout(3000) });
+        if (localResp.ok) {
+          setServerOnline(true);
+          setServerChecking(false);
+          return;
+        }
+      } catch {}
+      // Fallback au serveur DISTANT (90.35.92.246:8080)
+      try {
+        const remoteResp = await fetch('http://90.35.92.246:8080/health', { signal: AbortSignal.timeout(5000) });
+        setServerOnline(remoteResp.ok);
+      } catch {
+        setServerOnline(false);
+      }
       setServerChecking(false);
     };
-    // Get server URL from backend config
-    if (electronAPI?.getServerUrl) {
-      electronAPI.getServerUrl().then(url => {
-        if (url) serverUrl = url;
-        check();
-      }).catch(() => check());
-    } else {
-      check();
-    }
+    check();
     checkRef.current = setInterval(check, 30000);
     return () => { if (checkRef.current) clearInterval(checkRef.current); };
   }, []);
-
   // ─── IPC listeners ─────────────────────────────────────────
   useEffect(() => {
     if (!electronAPI) return;
