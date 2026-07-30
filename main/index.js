@@ -11,8 +11,8 @@ let mainWindow = null;
 let launcher = null;
 let auth = null;
 
-// ─── Auto-updater config ──────────────────────────────────────────
-autoUpdater.autoDownload = false;
+// ─── Auto-updater config — tout automatique ───────────────────────
+autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = true;
 
 // ═══════════════════════════════════════════════════════════════
